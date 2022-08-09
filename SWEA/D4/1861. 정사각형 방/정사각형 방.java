@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -58,7 +57,6 @@ class Solution {
 					}else if(max == tmp && maxNum > arr[i][j]) {
 						maxNum = arr[i][j];
 					}
-							
 				}
 			}
 			sb.append("#").append(t).append(" ");
