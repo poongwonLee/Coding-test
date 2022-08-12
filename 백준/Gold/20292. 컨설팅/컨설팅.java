@@ -18,19 +18,12 @@ public class Main {
 			if (tmp[0].equals("WRITE")) {
 				w = tmp[3];
 
-				if (read.get(w)!=null ||writeRe.get(w) != null || writeRe.get(r) != null) {
+				if (read.get(w) != null || writeRe.get(r) != null || writeRe.get(w) != null || write.get(w) != null) {
 					System.out.println("WAIT");
 					write = new HashMap<>();
 					read = new HashMap<>();
 					writeRe = new HashMap<>();
 				}
-				if (write.get(w) != null  || writeRe.get(r) != null) {
-					System.out.println("WAIT");
-					write = new HashMap<>();
-					read = new HashMap<>();
-					writeRe = new HashMap<>();
-				}
-
 				write.put(r, w);
 				writeRe.put(w, r);
 			} else {
