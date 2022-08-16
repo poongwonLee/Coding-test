@@ -14,12 +14,13 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			list.add(new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 		}
-		Collections.sort(list, (o1, o2) -> (o2.x - o1.x ==0 ? o2.y -o1.y : o2.x - o1.x));
-		int last = list.get(0).x;
+		Collections.sort(list, (o1, o2) -> (o1.y - o2.y ==0 ? o1.x -o2.x : o1.y - o2.y));
+		
+		int last = list.get(0).y;
 		int cnt = 1;
 		for (int i = 1; i < n; i++) {
-			if (last >= list.get(i).y) {
-				last = list.get(i).x;
+			if (last <= list.get(i).x) {
+				last = list.get(i).y;
 				cnt++;
 			}
 		}
