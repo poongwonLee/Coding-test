@@ -1,15 +1,11 @@
 import java.util.*;
-import java.awt.Point;
 import java.io.*;
-import java.lang.reflect.Array;
 
 class Solution {
-	static int[][] arr;
 	static int M, A;
 	static int[] dx = { 0, -1, 0, 1, 0 }, dy = { 0, 0, 1, 0, -1 };
 	static int[] moveA, moveB, ansA, ansB;
 	static AP[] APs;
-	static Queue<Integer> q = new LinkedList<Integer>();
 	static int res = 0;
 
 	static class AP {
@@ -22,12 +18,6 @@ class Solution {
 			this.y = Integer.parseInt(x) - 1;
 			this.x = Integer.parseInt(y) - 1;
 		}
-
-		@Override
-		public String toString() {
-			return "AP [c=" + c + ", p=" + p + ", x=" + x + ", y=" + y + "]";
-		}
-
 	}
 
 	static void checkAP(int x, int y, int xx, int yy, int idx) {
@@ -41,8 +31,6 @@ class Solution {
 				b.add(i);
 		}
 		int max = 0;
-		int idxa = 0;
-		int idxb = 0;
 		if (a.isEmpty() && b.isEmpty())
 			return;
 		
@@ -56,8 +44,6 @@ class Solution {
 						sum = APs[a.get(i)].p + APs[b.get(j)].p;
 					}
 					if (max < sum) {
-						idxa = i;
-						idxb = j;
 						max = sum;
 					}
 				}
@@ -89,20 +75,22 @@ class Solution {
 			moveB = new int[M];
 			ansA = new int[M + 1];
 			ansB = new int[M + 1];
-
-			APs = new AP[A];
+			APs = new AP[A];                                
+			
+			
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < M; i++)
 				moveA[i] = Integer.parseInt(st.nextToken());
+			
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < M; i++)
 				moveB[i] = Integer.parseInt(st.nextToken());
+			
 			for (int i = 0; i < A; i++) {
 				st = new StringTokenizer(br.readLine());
 				APs[i] = new AP(st.nextToken(), st.nextToken(), st.nextToken(), st.nextToken());
 			}
-			arr = new int[10][10];
-
+			Arrays.sort(APs, (x,y)->y.p-x.p);
 			int x = 0, y = 0;
 			int xx = 9, yy = 9;
 			checkAP(x, y, xx, yy, 0);
@@ -114,11 +102,8 @@ class Solution {
 				checkAP(x, y, xx, yy, i + 1);
 			}
 
-
 			sb.append("#").append(test).append(" ");
-			sb.append(res).append("\n");
-
-			
+			sb.append(res).append("\n");	
 		}
 		System.out.println(sb);
 	}
