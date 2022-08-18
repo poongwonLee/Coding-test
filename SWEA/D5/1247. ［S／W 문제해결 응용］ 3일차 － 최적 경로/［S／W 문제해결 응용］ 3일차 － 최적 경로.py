@@ -1,27 +1,54 @@
 
-m=int(input())
-visit=[]
-def dfs(v,n,x,y,dist):
-    global visit,MAP,MIN
-    if v==n:
-        MIN=min(MIN, dist+abs(MAP[-1][0]-x) + abs(MAP[-1][1]-y))
-    else:
-        for i in range(n):
-            if visit[i]==0 and dist+abs(MAP[i+1][0]-x)+abs(MAP[i+1][1]-y) < MIN:
-                visit[i]=1
-                dfs(v+1,n,MAP[i+1][0],MAP[i+1][1],dist+abs(MAP[i+1][0]-x)+abs(MAP[i+1][1]-y))
-                visit[i]=0
+import java.awt.Point;
+import java.io.*;
+import java.util.*;
+import java.util.stream.IntStream;
 
-for test in range(m):
-    MIN=2100000000
-    n=int(input())
-    MAP=[]
-    
-    tmp=list(map(int,input().split()))
-    MAP.append([tmp[2],tmp[3]])
-    for i in range(4,len(tmp)-1,2):
-        MAP.append([tmp[i],tmp[i+1]])
-    MAP.append([tmp[0],tmp[1]])
-    visit=[0]*(n)
-    dfs(0,n,MAP[0][0],MAP[0][1],0)
-    print("#%d %d"%(test+1,MIN))
+class Solution {
+
+	static int n,min;
+	static int[] visit;
+	static Point []arr;
+
+	static void dfs(int v,int x,int y,int dist) {
+		if(v==n) {
+			min=Math.min(min, dist + Math.abs(x-arr[1].x) +Math.abs(y-arr[1].y));
+			return;
+		}
+		for(int i=2;i<n+2;i++) {
+			int nextDist=dist + Math.abs(x-arr[i].x) +Math.abs(y-arr[i].y);
+
+			if(visit[i-2]==0 &&nextDist < min ) {
+				visit[i-2]=1;
+				dfs(v+1,arr[i].x,arr[i].y,nextDist);
+				visit[i-2]=0;
+
+			}
+		}
+	}
+	public static void main(String args[]) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		StringBuilder sb = new StringBuilder();
+
+		int testCase = Integer.parseInt(br.readLine());
+		for (int t = 1; t <= testCase; t++) {
+			min=Integer.MAX_VALUE;
+			n= Integer.parseInt(br.readLine());
+			arr= new Point[n+2];
+			visit= new int[n];
+			
+			st = new StringTokenizer(br.readLine());
+			
+			for(int i=0;i<n+2;i++)
+				arr[i]=new Point(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+			
+			dfs(0,arr[0].x,arr[0].y,0);
+			
+			sb.append("#").append(t).append(" ");
+			sb.append(min);
+			sb.append("\n");
+		}
+		System.out.println(sb);
+	}
+}
