@@ -25,8 +25,6 @@ public class Main {
 					@Override
 					public int compare(int[] o1, int[] o2) {
 						if (o1[2] == o2[2]) {
-							if (attackList.get(o1[1]).y == attackList.get(o2[1]).y)
-								return Integer.compare(attackList.get(o1[1]).x, attackList.get(o2[1]).x);
 							return Integer.compare(attackList.get(o1[1]).y, attackList.get(o2[1]).y);
 						}
 						return Integer.compare(o1[2], o2[2]);
