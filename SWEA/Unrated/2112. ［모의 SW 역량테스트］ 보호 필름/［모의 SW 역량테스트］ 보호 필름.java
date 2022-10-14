@@ -7,11 +7,47 @@ class Solution {
 	static int[][] arr, copyArr;
 	static int[] select, visit;
 	static int N, M, K, min;
-
-
+	static ArrayList<Integer> list = new ArrayList<>();
 
 	static void dfs(int v, int cnt) {
-		if (v == N) {
+//		if(min<v)return;
+
+		
+		if (cnt <= K &&cnt<min) {
+
+			list.clear();
+			for (int i = 0; i < N; i++) {
+				if (visit[i] == 1) {
+					list.add(i);
+				}
+			}
+			select = new int[list.size()];
+			dfs3(0, list.size());
+//			System.out.println(Arrays.toString(visit));
+		}
+		if (v == N)
+			return;
+		visit[v] = 1;
+		dfs(v + 1, cnt + 1);
+		visit[v] = 0;
+		dfs(v + 1, cnt);
+	}
+
+	static void dfs3(int v, int size) {
+		if (v == size && min>size) {
+			for (int i = 0; i < N; i++)
+				for (int j = 0; j < M; j++)
+					arr[i][j] = copyArr[i][j];
+
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < M; j++) {
+					arr[list.get(i)][j] = select[i];
+				}
+			}
+
+//			for (int[] is : arr) {
+//				System.out.println(Arrays.toString(is));
+//			}
 			boolean flag = true;
 			for (int j = 0; j < M; j++) {
 				int cnt2 = 0;
@@ -20,10 +56,10 @@ class Solution {
 					if (arr[i][j] == arr[i + 1][j])
 						cnt2++;
 					else {
-						
+
 						cnt2 = 0;
 					}
-					if (cnt2 >= K-1) {
+					if (cnt2 >= K - 1) {
 						flag2 = true;
 						break;
 					}
@@ -35,23 +71,19 @@ class Solution {
 				}
 			}
 			if (flag) {
-				min = Math.min(min, cnt);
+				min = Math.min(min, size);
 			}
-			return;
-		}
-		dfs(v+1,cnt);
-		for(int k=0;k<2;k++) {
-			for(int j=0;j<M;j++)
-				arr[v][j]=k;
-			dfs(v+1,cnt+1);
-		}
-		for(int k=0;k<2;k++) {
-			for(int j=0;j<M;j++)
-				arr[v][j]=copyArr[v][j];
-		}
-	}
 
-	
+			return;
+
+		}
+		if(v==size)return;
+		select[v] = 1;
+		dfs3(v + 1, size);
+		select[v] = 0;
+		dfs3(v + 1, size);
+
+	}
 
 	public static void main(String args[]) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -71,9 +103,10 @@ class Solution {
 			visit = new int[N];
 			for (int i = 0; i < N; i++)
 				copyArr[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-			for(int i=0;i<N;i++)
-				arr[i]=Arrays.copyOf(copyArr[i], M);
-			dfs(0,0);
+
+//			dfs(0, 0);
+			dfs(0, 0);
+//			System.out.println(min);
 			sb.append("#").append(test_case).append(" ").append(min).append("\n");
 
 		}
