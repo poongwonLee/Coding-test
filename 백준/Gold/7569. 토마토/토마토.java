@@ -55,7 +55,7 @@ public class Main {
             	   q.offer(i);
             	   q.offer(j);
             	   q.offer(k);
-            	   
+                   
                }
             }
          }
@@ -71,8 +71,9 @@ public class Main {
    }
    
    public static int bfs() {
-      //큐를 생성해서
      
+     
+      
       //큐가 빌 때까지 while문 수행
       while(!q.isEmpty()) {
          int curZ = q.poll();
